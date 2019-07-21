@@ -1,8 +1,9 @@
 sudo: true
-os: macos
-cache: false
-env:
-- URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
+os:
+  - osx
+language: node_js
+node_js:
+  - "8"
 before_install:
 - openssl aes-256-cbc -K $encrypted_322378ca1766_key -iv $encrypted_322378ca1766_iv
   -in assets/server.key.enc -out assets/server.key -d
@@ -11,10 +12,7 @@ before_install:
 - export SFDX_DOMAIN_RETRY=300
 - export SFDX_DISABLE_APP_HUB=true
 - export SFDX_LOG_LEVEL=DEBUG
-- mkdir sfdx
-- wget -qO- $URL | tar xJ -C sfdx --strip-components 1
-- "./sfdx/install"
-- export PATH=./sfdx/$(pwd):$PATH
+- npm i -g sfdx-cli
 - sfdx --version
 - sfdx plugins --core
 - sfdx force:auth:jwt:grant --clientid 3MVG9HxRZv05HarTsRHSc43p5obR7kazsrlfxSjZpHQTY66KWFAxqMRHygcX2C2qvUO06.rGayQ0in0zzc9gY --jwtkeyfile assets/server.key
