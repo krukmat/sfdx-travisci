@@ -17,10 +17,11 @@ before_install:
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx --version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid 3MVG9HxRZv05HarTsRHSc43p5obR7kazsrlfxSjZpHQTY66KWFAxqMRHygcX2C2qvUO06.rGayQ0in0zzc9gY --jwtkeyfile assets/server.key
-  --username krukmat@s4g.com --setdefaultdevhubusername -a HubOrg
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
+  --username $USERNAME --setdefaultdevhubusername -a HubOrg
 script:
-- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 3
+- sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait
+  2
 - sfdx force:org:display -u ciorg
 - sfdx force:source:push -u ciorg
 - sfdx force:apex:test:run -u ciorg --wait 10
